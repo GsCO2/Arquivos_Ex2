@@ -16,6 +16,10 @@ public class SteamController implements ISteamController {
 
 	@Override
 	public void primeiroCaso(String path, String name, int ano, String mes, double media) throws IOException {
+		File dir = new File(path);
+		if (!dir.exists() || !dir.isDirectory()) {
+		    throw new IOException("Diretório inválido");
+		}
 		File arq = new File(path, name);
 		if(arq.exists() && arq.isFile()) {
 			FileInputStream flow = new FileInputStream(arq);
@@ -55,7 +59,7 @@ public class SteamController implements ISteamController {
 				String[] v = linha.split(",");
 				int anoString = Integer.parseInt(v[1]);
 				String mesString = v[2];
-				if(anoString == ano && mesString.toLowerCase().contains(mes)) {
+				if(anoString == ano && mesString.equalsIgnoreCase(mes)) {
 					createFile(path, v[0], v[3]);
 				}
 			}

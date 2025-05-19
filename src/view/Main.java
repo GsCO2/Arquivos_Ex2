@@ -1,4 +1,5 @@
 package view;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
@@ -6,7 +7,7 @@ import javax.swing.JOptionPane;
 import controller.*;
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		int opc = 0; 
 		ISteamController isc = new SteamController();
 		String path;
@@ -30,6 +31,10 @@ public class Main {
 				break;
 			case 2:
 				path = (JOptionPane.showInputDialog("Digite o diretorio(exemplo: C:\\TEMP)"));
+				File dir = new File(path);
+				if (!dir.exists() || !dir.isDirectory()) {
+				    throw new IOException("Diretório inválido");
+				}
 				ano = Integer.parseInt(JOptionPane.showInputDialog("Digite um ano"));
 				mes = (JOptionPane.showInputDialog("Digite um mes(em extenso)"));
 				try {
